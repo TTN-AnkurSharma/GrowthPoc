@@ -5,16 +5,20 @@ plugins {
 group = "org.example"
 version = "1.0-SNAPSHOT"
 
-repositories {
-    mavenCentral()
-}
+subprojects {
+    apply(plugin = "java")
 
-dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-}
+    group = "com.growthpoc"
+    version = "1.0-SNAPSHOT"
 
-tasks.test {
-    useJUnitPlatform()
+    repositories {
+        mavenCentral()
+    }
+
+    // Use the JDK already configured for this project in IntelliJ.
+    configure<JavaPluginExtension> {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(21))
+        }
+    }
 }
